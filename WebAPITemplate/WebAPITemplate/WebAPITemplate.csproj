@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+	</PropertyGroup>
+	
+	<ItemGroup>
+		<PackageReference Include="NSwag.AspNetCore" Version="13.13.2" />
+		<PackageReference Include="NSwag.CodeGeneration.CSharp" Version="13.13.2" />
+		<PackageReference Include="NSwag.Generation.AspNetCore" Version="13.13.2" />
+		<PackageReference Include="NSwag.MSBuild" Version="13.13.2">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+	</ItemGroup>
+
+	<Target Name="UpdateGeneratedFiles" AfterTargets="BeforeBuild;BeforeRebuild">
+		<ItemGroup>
+			<Compile Include="Controllers/Generated/OpenAPI.cs" Condition="!Exists('Controllers/Generated/OpenAPI.cs')" />
+		</ItemGroup>
+	</Target>
+	<Target Name="NSwag" BeforeTargets="BeforeBuild;BeforeRebuild" DependsOnTargets="UpdateGeneratedFiles">
+		<Exec Command="$(NSwagExe_Net50) run $(MSBuildProjectDirectory)/nswag.json /variables:OutputPath=$(MSBuildProjectDirectory)/Controllers/Generated/OpenAPI.cs,OpenAPIDocument=$(MSBuildProjectDirectory)/wwwroot/swagger/v1/open-api.yaml" />
+	</Target>
+</Project>
