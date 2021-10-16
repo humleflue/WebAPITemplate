@@ -23,24 +23,37 @@ namespace WASPQueryAPI.Controllers
         /// <param name="body">Post the necessary fields for the API to create a new user.</param>
         /// <returns>No content.</returns>
         [Microsoft.AspNetCore.Mvc.HttpPost, Microsoft.AspNetCore.Mvc.Route("user")]
-        public abstract System.Threading.Tasks.Task<Microsoft.AspNetCore.Mvc.IActionResult> CreateUser([Microsoft.AspNetCore.Mvc.FromBody] CreateUser body);
+        public abstract System.Threading.Tasks.Task<Microsoft.AspNetCore.Mvc.IActionResult> Create([Microsoft.AspNetCore.Mvc.FromBody] User body);
     
         /// <returns>OK</returns>
         [Microsoft.AspNetCore.Mvc.HttpGet, Microsoft.AspNetCore.Mvc.Route("user")]
         public abstract System.Threading.Tasks.Task<Microsoft.AspNetCore.Mvc.ActionResult<System.Collections.Generic.ICollection<User>>> GetAll();
+    
+        /// <summary>Get a user</summary>
+        /// <returns>OK</returns>
+        [Microsoft.AspNetCore.Mvc.HttpGet, Microsoft.AspNetCore.Mvc.Route("user/{id}")]
+        public abstract System.Threading.Tasks.Task<Microsoft.AspNetCore.Mvc.ActionResult<User>> Get(string id);
+    
+        /// <returns>No Content</returns>
+        [Microsoft.AspNetCore.Mvc.HttpPut, Microsoft.AspNetCore.Mvc.Route("user/{id}")]
+        public abstract System.Threading.Tasks.Task<Microsoft.AspNetCore.Mvc.IActionResult> Update([Microsoft.AspNetCore.Mvc.FromBody] User body, string id);
+    
+        /// <returns>No Content</returns>
+        [Microsoft.AspNetCore.Mvc.HttpDelete, Microsoft.AspNetCore.Mvc.Route("user/{id}")]
+        public abstract System.Threading.Tasks.Task<Microsoft.AspNetCore.Mvc.IActionResult> Delete(string id);
     
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.5.2.0 (Newtonsoft.Json v12.0.0.0)")]
     public partial class User : System.ComponentModel.INotifyPropertyChanged
     {
-        private int _id;
+        private string _id;
         private string _firstName;
         private string _lastName;
     
         /// <summary>Unique identifier for the given user.</summary>
-        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.Always)]
-        public int Id
+        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Id
         {
             get { return _id; }
             set
@@ -100,72 +113,6 @@ namespace WASPQueryAPI.Controllers
         public static User FromJson(string data)
         {
             return Newtonsoft.Json.JsonConvert.DeserializeObject<User>(data, new Newtonsoft.Json.JsonSerializerSettings());
-        }
-    
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected virtual void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
-        {
-            var handler = PropertyChanged;
-            if (handler != null) 
-                handler(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-        }
-    
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.5.2.0 (Newtonsoft.Json v12.0.0.0)")]
-    public partial class CreateUser : System.ComponentModel.INotifyPropertyChanged
-    {
-        private string _firstName;
-        private string _lastName;
-    
-        [Newtonsoft.Json.JsonProperty("firstName", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public string FirstName
-        {
-            get { return _firstName; }
-            set
-            {
-                if (_firstName != value)
-                {
-                    _firstName = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-    
-        [Newtonsoft.Json.JsonProperty("lastName", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public string LastName
-        {
-            get { return _lastName; }
-            set
-            {
-                if (_lastName != value)
-                {
-                    _lastName = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-    
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
-    
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties; }
-            set { _additionalProperties = value; }
-        }
-    
-        public string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
-        }
-    
-        public static CreateUser FromJson(string data)
-        {
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<CreateUser>(data, new Newtonsoft.Json.JsonSerializerSettings());
         }
     
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;

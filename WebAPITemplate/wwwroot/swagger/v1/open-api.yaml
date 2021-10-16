@@ -2,13 +2,14 @@ openapi: 3.1.0
 info:
   title: api-title
   version: '1.0'
+  description: API Template
 servers:
-  - url: 'http://localhost:3000'
+  - url: 'http://localhost:5001'
 paths:
   /user:
     post:
       summary: Create New User
-      operationId: user_createUser
+      operationId: user_create
       responses:
         '204':
           description: No content.
@@ -16,7 +17,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateUser'
+              $ref: '#/components/schemas/User'
             examples:
               Create User Bob Fellow:
                 value:
@@ -41,6 +42,48 @@ paths:
                 items:
                   $ref: '#/components/schemas/User'
       description: Gets all users.
+      tags:
+        - User
+    parameters: []
+  '/user/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Get a user
+      tags:
+        - User
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      operationId: user_get
+      description: Get a user.
+    put:
+      summary: ''
+      operationId: user_update
+      responses:
+        '204':
+          description: No Content
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      description: Update a user's information.
+    delete:
+      summary: ''
+      operationId: user_delete
+      responses:
+        '204':
+          description: No Content
+      description: Delete a user.
 components:
   schemas:
     User:
@@ -57,24 +100,14 @@ components:
           signUpDate: '2019-08-24'
       properties:
         id:
-          type: integer
+          type: string
           description: Unique identifier for the given user.
         firstName:
           type: string
         lastName:
           type: string
       required:
-        - id
         - firstName
         - lastName
-    CreateUser:
-      title: CreateUser
-      type: object
-      properties:
-        firstName:
-          type: string
-        lastName:
-          type: string
-      required:
-        - firstName
-        - lastName
+tags:
+  - name: User

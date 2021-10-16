@@ -1,0 +1,11 @@
+﻿# Default ignored files
+/shelf/
+/workspace.xml
+# Rider ignored files
+/modules.xml
+/contentModel.xml
+/projectSettingsUpdater.xml
+/.idea.WebAPITemplate.iml
+# Datasource local storage ignored files
+/../../../../../../:\GitRepos\cs-webapi-template\.idea\.idea.WebAPITemplate\.idea/dataSources/
+/dataSources.local.xml
