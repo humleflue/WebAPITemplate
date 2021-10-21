@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using WASPQueryAPI.Controllers;
 
 namespace WebAPITemplate.Controllers
 {
@@ -46,7 +45,7 @@ namespace WebAPITemplate.Controllers
         public override async Task<IActionResult> Update(User body, string id)
         {
             User user = await FindUserAsync(id);
-            if(user == null)
+            if (user == null)
                 return BadRequest($"User with id '{id}' not found.");
             user.FirstName = body.FirstName;
             user.LastName = body.LastName;
@@ -57,7 +56,7 @@ namespace WebAPITemplate.Controllers
         {
             return await SimulateAsync(Users.Find(u => u.Id == id));
         }
-        
+
         private async Task<T> SimulateAsync<T>(T obj)
         {
             return await Task.Run(() => obj);
