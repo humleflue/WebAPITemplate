@@ -1,16 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace WebAPITemplate
 {
@@ -38,7 +33,7 @@ namespace WebAPITemplate
             });
 
             services.AddHttpContextAccessor();
-            services.AddScoped(s => s.GetService<IHttpContextAccessor>().HttpContext.User);
+            services.AddScoped(s => s.GetService<IHttpContextAccessor>()?.HttpContext.User);
 
             services.AddControllers().AddJsonOptions(options =>
             {
